@@ -1,0 +1,29 @@
+@use '../abstracts' as *;
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+
+  &__item {
+    @include glass;
+    padding: 6px 12px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  &__label {
+    display: block;
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-snug);
+    color: $blue;
+  }
+  &__value {
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-base);
+    color: var(--gold);
+    @include neon(var(--gold));
+  }
+}
