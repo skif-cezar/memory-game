@@ -1,0 +1,22 @@
+@use '../abstracts' as *;
+
+.header {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: var(--font-size-4xl);
+    line-height: var(--line-height-base);
+    color: #fff;
+  }
+
+  &__nav {
+    display: inline-flex;
+    gap: 20px;
+  }
+}

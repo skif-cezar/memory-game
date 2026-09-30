@@ -11,6 +11,62 @@
     <link rel="manifest" href="/site.webmanifest" />
   </head>
   <body>
+    <video class="bg-video" autoplay loop muted playsinline>
+      <source src="/public/assets/background.mp4" type="video/mp4" />
+      <!-- Фолбек на случай, если видео не поддерживается -->
+      Ваш браузер не поддерживает видеофон.
+    </video>
+    <div class="app">
+      <header class="header">
+        <div class="header__container">
+          <h1 class="header__title">Star Wars Memory Game</h1>
+
+          <nav class="header__nav" aria-label="Game controls">
+            <button type="button" class="btn" id="btn-new-game" aria-label="Start a new game">
+              New Game
+            </button>
+
+            <button
+              type="button"
+              class="btn"
+              id="btn-leaderboard"
+              aria-haspopup="dialog"
+              aria-controls="modal-leaderboard"
+              aria-label="Open Leaderboard"
+            >
+              Leaderboard
+            </button>
+          </nav>
+        </div>
+      </header>
+    </div>
+    <!-- Модальное окно «Таблица лидеров» -->
+    <dialog class="modal" id="modal-leaderboard" aria-labelledby="leaderboard-title">
+      <div class="modal__content">
+        <header class="modal__header">
+          <h2 class="modal__title" id="leaderboard-title">Таблица лидеров</h2>
+          <button type="button" class="modal__close" id="btn-close-leaderboard" aria-label="Закрыть таблицу лидеров">
+            &times;
+          </button>
+        </header>
+
+        <div class="modal__body">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th scope="col">Место</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Ходы</th>
+                <th scope="col">Время</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-tbody">
+              <!-- Заполняется динамически через JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </dialog>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

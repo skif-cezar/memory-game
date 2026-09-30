@@ -1,0 +1,20 @@
+@use '../abstracts' as *;
+
+.btn {
+  font-size: var(--font-size-base);
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  background: rgba(var(--accent-rgb), 0.18);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.4);
+  color: #fff;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+
+  &:hover {
+    background: rgba(var(--accent-rgb), 0.35);
+    box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.7);
+  }
+}
