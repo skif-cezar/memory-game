@@ -41,13 +41,15 @@
 }
 
 .card__face--front {
-  background-color: #1e1b4b;
-  background: url('/assets/images/characters/darth-vader.png') center / 64px 64px no-repeat #1e1b4b;
+  background-color: #3b3b0f;
+  background-position: center;
+  background-size: 64px 64px;
+  background-repeat: no-repeat;
   border: 2px solid #ffe81f;
   transform: rotateY(180deg);
 }
 
-.card:hover .card__inner {
+.card:not([aria-pressed='true']):hover .card__inner {
   transform: scale(1.05) translateZ(5px);
   box-shadow: 0 8px 16px rgba(56, 189, 248, 0.3);
 }
@@ -57,14 +59,34 @@
   box-shadow: 0 6px 14px rgba(255, 232, 31, 0.35);
 }
 
-.card[aria-pressed='true']:hover .card__inner {
-  transform: rotateY(180deg) scale(1.05) translateZ(5px);
+.card__face--c3po {
+  background-image: url('/assets/c-3po-48.png');
+}
+
+.card__face--chewbacca {
+  background-image: url('/assets/chewbacca-48.png');
 }
 
 .card__face--vader {
-  background-image: url('/assets/images/characters/vader.png');
+  background-image: url('/assets/darth-vader-48.png');
+}
+
+.card__face--death-star {
+  background-image: url('/assets/death-star-48.png');
+}
+
+.card__face--lightsaber {
+  background-image: url('/assets/lightsaber-48.png');
+}
+
+.card__face--r2d2 {
+  background-image: url('/assets/r2-d2-48.png');
+}
+
+.card__face--stormtrooper {
+  background-image: url('/assets/stormtrooper-48.png');
 }
 
 .card__face--yoda {
-  background-image: url('/assets/images/characters/yoda.png');
+  background-image: url('/assets/yoda-48.png');
 }
