@@ -149,8 +149,28 @@
       </main>
     </div>
 
-    <!-- Modal 'Leaderboard' -->
+    <!-- Modal 'Win!' -->
     <div class="modal modal--open" aria-hidden="false">
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Win!">
+        <h2 class="modal__title">Win!</h2>
+        <div class="modal__body">
+          <div class="win">
+            <div class="win__image">
+              
+            </div>
+            <p class="win__message">Matched, all pairs are. May the Force be with you!</p>
+            <p class="win__moves">Progress: <span class="win__count-progress">20</span></p>
+        </div>
+        <div class="modal__actions">
+          <button class="btn" type="button">New Game</button
+          ><button class="btn btn--close" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 'Leaderboard' -->
+    <!-- class="modal modal--open" aria-hidden="false" -->
+    <div class="modal" aria-hidden="true">
       <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Leaderboard">
         <h2 class="modal__title">Leaderboard</h2>
         <div class="modal__body">
@@ -184,7 +204,7 @@
         <div class="modal__actions"><button class="btn btn--close" type="button">Close</button></div>
       </div>
     </div>
-    
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
