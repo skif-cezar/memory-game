@@ -3,7 +3,7 @@
 .header {
   &__container {
     display: flex;
-    row-gap: 20px;
+    gap: 20px;
     align-items: center;
     justify-content: space-between;
   }
@@ -32,5 +32,13 @@
     gap: 20px;
     align-items: center;
     justify-content: center;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .header {
+    &__container {
+      flex-direction: column;
+    }
   }
 }

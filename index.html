@@ -17,26 +17,6 @@
       Ваш браузер не поддерживает видеофон.
     </video>
     <div class="app">
-      <header class="header">
-        <div class="header__container">
-          <h1 class="header__title">Star Wars Memory Game</h1>
-
-          <nav class="header__nav" aria-label="Game controls">
-            <button type="button" class="btn" id="btn-new-game" aria-label="Start a new game">New Game</button>
-
-            <button
-              type="button"
-              class="btn"
-              id="btn-leaderboard"
-              aria-haspopup="dialog"
-              aria-controls="modal-leaderboard"
-              aria-label="Open Leaderboard"
-            >
-              Leaderboard
-            </button>
-          </nav>
-        </div>
-      </header>
       <main class="app__main">
         <section class="stats">
           <div class="stats__item">
@@ -150,7 +130,8 @@
     </div>
 
     <!-- Modal 'Win!' -->
-    <div class="modal modal--open" aria-hidden="false">
+     <!-- class="modal modal--open" aria-hidden="false" -->
+    <div class="modal" aria-hidden="true">
       <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Win!">
         <h2 class="modal__title">Win!</h2>
         <div class="modal__body">
