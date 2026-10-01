@@ -5,14 +5,6 @@
   --accent-rgb: 56, 189, 248;
   --gold: #{$gold};
 }
-[data-theme='light'] {
-  --accent: #{$jedi};
-  --accent-rgb: 0, 255, 102;
-}
-[data-theme='dark'] {
-  --accent: #{$sith};
-  --accent-rgb: 255, 0, 51;
-}
 
 *,
 *::before,
@@ -23,7 +15,6 @@
 
 html {
   font-size: var(--font-size-base);
-  color-scheme: dark;
 }
 
 /* Позиционируем видео на весь экран за контентом */

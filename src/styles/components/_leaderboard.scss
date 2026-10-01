@@ -1,0 +1,23 @@
+@use '../abstracts' as *;
+
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+
+  th,
+  td {
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(var(--accent-rgb), 0.2);
+  }
+  th {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  &__empty {
+    text-align: center;
+    opacity: 0.8;
+  }
+}
