@@ -17,28 +17,19 @@ html {
   font-size: var(--font-size-base);
 }
 
-/* Позиционируем видео на весь экран за контентом */
-.bg-video {
+.bg-canvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover; /* Растягивает видео без искажения пропорций */
-  z-index: -1; /* Убирает под весь контент сайта */
-  pointer-events: none; /* Видео не перехватывает клики мыши */
-}
-
-/* Опционально: затемнение фона, чтобы текст легко читался */
-.bg-video::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* 50% затемнения */
+  object-fit: cover;
   z-index: -1;
+  pointer-events: none;
 }
 
 body {
+  position: relative;
   min-height: 100dvh;
   color: #dbeafe;
   font-family: var(--font-family-base);

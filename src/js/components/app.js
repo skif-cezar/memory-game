@@ -1,3 +1,4 @@
+import { createBackground } from './background.js';
 import { createHeader } from './header';
 import { createBoard } from './board';
 import { createModal } from './modal';
@@ -12,6 +13,8 @@ export const createApp = () => {
     { place: 2, progress: 16, date: '01.10.2026' },
     { place: 3, progress: 21, date: '01.10.2026' },
   ];
+
+  const backgroundCanvas = createBackground();
 
   const app = document.createElement('div');
   app.classList.add('app');
@@ -67,10 +70,7 @@ export const createApp = () => {
     },
   });
 
-  app.append(header);
-  app.append(board);
-  app.append(winModal);
-  app.append(leaderBoardModal);
+  app.append(backgroundCanvas, header, board, winModal, leaderBoardModal);
 
   return app;
 };
