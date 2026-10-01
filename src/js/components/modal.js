@@ -1,11 +1,11 @@
 export const createModal = ({
-  text,
+  text = '',
   classNames = ['modal'],
   bodyContent = null,
-  actionsContent = null,
+  actionsContent = [],
   attributesDialog = {},
   attributesModal = {},
-}) => {
+} = {}) => {
   const modal = document.createElement('div');
   modal.classList.add(...classNames);
 

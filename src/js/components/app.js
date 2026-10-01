@@ -3,8 +3,16 @@ import { createBoard } from './board';
 import { createModal } from './modal';
 import { createButton } from './button';
 import { createWinBody } from './winBody';
+import { createLeaderboardTable } from './leaderboardTable.js';
 
 export const createApp = () => {
+  // Пример данных таблицы
+  const leaderboardData = [
+    { place: 1, progress: 13, date: '30.09.2026' },
+    { place: 2, progress: 16, date: '01.10.2026' },
+    { place: 3, progress: 21, date: '01.10.2026' },
+  ];
+
   const app = document.createElement('div');
   app.classList.add('app');
 
@@ -17,7 +25,7 @@ export const createApp = () => {
       'aria-label': 'Start a new game',
     },
   });
-  const btnClose = createButton({
+  const btnCloseWinModal = createButton({
     text: 'Close',
     id: 'btn-close',
     classNames: ['btn--close'],
@@ -31,14 +39,25 @@ export const createApp = () => {
       'aria-hidden': 'true',
     },
     bodyContent: createWinBody(),
-    actionsContent: [btnNewGame, btnClose],
+    actionsContent: [btnNewGame, btnCloseWinModal],
     attributesDialog: {
       'aria-modal': 'true',
       'aria-label': 'Win!',
     },
   });
+  const btnCloseLeaderBoardModal = createButton({
+    text: 'Close',
+    id: 'btn-close',
+    classNames: ['btn--close'],
+    attributes: {
+      'aria-label': 'Close',
+    },
+  });
+  const tableElement = createLeaderboardTable(leaderboardData);
   const leaderBoardModal = createModal({
     text: 'Leaderboard',
+    bodyContent: tableElement,
+    actionsContent: [btnCloseLeaderBoardModal],
     attributesModal: {
       'aria-hidden': 'true',
     },
