@@ -1,4 +1,11 @@
-export const createModal = ({ text, classNames = ['modal'], attributesDialog = {}, attributesModal = {} }) => {
+export const createModal = ({
+  text,
+  classNames = ['modal'],
+  bodyContent = null,
+  actionsContent = null,
+  attributesDialog = {},
+  attributesModal = {},
+}) => {
   const modal = document.createElement('div');
   modal.classList.add(...classNames);
 
@@ -24,7 +31,7 @@ export const createModal = ({ text, classNames = ['modal'], attributesDialog = {
   const actions = document.createElement('div');
   actions.classList.add('modal__actions');
 
-  /*if (bodyContent) {
+  if (bodyContent) {
     if (Array.isArray(bodyContent)) {
       body.append(...bodyContent);
     } else {
@@ -38,7 +45,7 @@ export const createModal = ({ text, classNames = ['modal'], attributesDialog = {
     } else {
       actions.append(actionsContent);
     }
-  }*/
+  }
 
   modalDialog.append(title, body, actions);
   modal.append(modalDialog);
