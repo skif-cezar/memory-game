@@ -1,16 +1,24 @@
 import { shuffle } from '../utils/shuffle';
+import { revealCard } from '../utils/revealCard';
+import { hideCard } from '../utils/hideCard';
 
 const CARD_TYPES = ['c3po', 'chewbacca', 'vader', 'death-star', 'lightsaber', 'r2d2', 'stormtrooper', 'yoda'];
 
-export const createGame = () => {
-  let flippedCards = [];
+export const createGame = ({ onWin } = {}) => {
+  let moves = 0;
   let matchedPairs = 0;
+  let flippedCards = [];
   let isBoardLocked = false;
 
   const cardsMap = new Map();
 
   const generateCardsData = () => {
     cardsMap.clear();
+    moves = 0;
+    matchedPairs = 0;
+    flippedCards = [];
+    isBoardLocked = false;
+
     const pairs = [...CARD_TYPES, ...CARD_TYPES];
     const shuffled = shuffle(pairs);
 
@@ -28,39 +36,18 @@ export const createGame = () => {
     });
   };
 
-  // Show card face
-  const revealCard = (cardElement) => {
-    const cardId = cardElement.id;
-    const cardType = cardsMap.get(cardId);
-    const frontFace = cardElement.querySelector('.card__face--front');
-
-    if (frontFace && cardType) {
-      frontFace.classList.add(`card__face--${cardType}`);
-      cardElement.setAttribute('aria-label', `Карточка ${cardType}`);
-    }
-    cardElement.setAttribute('aria-pressed', 'true');
-  };
-
-  // Hide card face
-  const hideCard = (cardElement) => {
-    const cardId = cardElement.id;
-    const cardType = cardsMap.get(cardId);
-    const frontFace = cardElement.querySelector('.card__face--front');
-
-    if (frontFace && cardType) {
-      frontFace.classList.remove(`card__face--${cardType}`);
-      cardElement.setAttribute('aria-label', 'Скрытая карточка');
-    }
-    cardElement.setAttribute('aria-pressed', 'false');
-  };
-
   const handleCardClick = (cardElement) => {
     if (isBoardLocked || cardElement.getAttribute('aria-pressed') === 'true' || cardElement.disabled) {
       return;
     }
 
+    moves += 1;
+
     // Open card in DOM onclick
-    revealCard(cardElement);
+    const cardId = cardElement.id;
+    const cardType = cardsMap.get(cardId);
+
+    revealCard(cardElement, cardType);
     flippedCards.push(cardElement);
 
     // If 2 cards are turned over, we check
@@ -80,15 +67,19 @@ export const createGame = () => {
         matchedPairs += 1;
 
         if (matchedPairs === CARD_TYPES.length) {
-          setTimeout(() => alert('логика показа модалки'), 700);
+          setTimeout(() => {
+            if (typeof onWin === 'function') {
+              onWin(moves);
+            }
+          }, 700);
         }
       } else {
         // No match — we lock the board and flip them back over after 1 second.
         isBoardLocked = true;
 
         setTimeout(() => {
-          hideCard(firstCard);
-          hideCard(secondCard);
+          hideCard(firstCard, firstType);
+          hideCard(secondCard, secondType);
           flippedCards = [];
           isBoardLocked = false;
         }, 1000);

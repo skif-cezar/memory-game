@@ -20,7 +20,27 @@ export const createApp = () => {
   app.classList.add('app');
 
   const header = createHeader();
-  const board = createBoard();
+
+  // Show/hide modal
+  const openModal = (modalElement) => {
+    modalElement.setAttribute('aria-hidden', 'false');
+    modalElement.classList.add('modal--open');
+  };
+
+  const closeModal = (modalElement) => {
+    modalElement.setAttribute('aria-hidden', 'true');
+    modalElement.classList.remove('modal--open');
+  };
+
+  const handleWin = (movesCount) => {
+    const progressCountElement = winModal.querySelector('.win__count-progress');
+    if (progressCountElement) {
+      progressCountElement.textContent = movesCount;
+    }
+    openModal(winModal);
+  };
+
+  const board = createBoard({ onWin: handleWin });
   const btnNewGame = createButton({
     text: 'New Game',
     id: 'btn-new-game',
@@ -48,6 +68,18 @@ export const createApp = () => {
       'aria-label': 'Win!',
     },
   });
+
+  // Close
+  btnCloseWinModal.addEventListener('click', () => {
+    closeModal(winModal);
+  });
+
+  // Restart
+  btnNewGame.addEventListener('click', () => {
+    closeModal(winModal);
+    window.location.reload();
+  });
+
   const btnCloseLeaderBoardModal = createButton({
     text: 'Close',
     id: 'btn-close',
@@ -56,6 +88,11 @@ export const createApp = () => {
       'aria-label': 'Close',
     },
   });
+
+  btnCloseLeaderBoardModal.addEventListener('click', () => {
+    closeModal(leaderBoardModal);
+  });
+
   const tableElement = createLeaderboardTable(leaderboardData);
   const leaderBoardModal = createModal({
     text: 'Leaderboard',

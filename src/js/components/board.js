@@ -2,7 +2,7 @@ import { createStats } from './stats.js';
 import { createCard } from './card.js';
 import { createGame } from '../core/game.js';
 
-export const createBoard = () => {
+export const createBoard = ({ onWin } = {}) => {
   const main = document.createElement('main');
   main.classList.add('app__main');
 
@@ -10,7 +10,7 @@ export const createBoard = () => {
   boardContainer.classList.add('board');
 
   const stats = createStats();
-  const game = createGame();
+  const game = createGame({ onWin });
 
   // Get data for 16 cards
   const cardsData = game.generateCardsData();
