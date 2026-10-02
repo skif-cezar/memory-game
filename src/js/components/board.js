@@ -10,7 +10,13 @@ export const createBoard = ({ onWin } = {}) => {
   boardContainer.classList.add('board');
 
   const stats = createStats();
-  const game = createGame({ onWin });
+  const game = createGame({
+    onWin,
+    onStatsUpdate: ({ moves, matchedPairs }) => {
+      stats.updateMoves(moves);
+      stats.updatePairs(matchedPairs);
+    },
+  });
 
   const renderCards = () => {
     boardContainer.replaceChildren();
@@ -35,10 +41,11 @@ export const createBoard = ({ onWin } = {}) => {
   });
 
   const resetBoard = () => {
+    stats.resetStats();
     renderCards();
   };
 
-  main.append(stats, boardContainer);
+  main.append(stats.element, boardContainer);
 
   return {
     element: main,

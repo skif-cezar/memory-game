@@ -4,7 +4,7 @@ import { hideCard } from '../utils/hideCard';
 
 const CARD_TYPES = ['c3po', 'chewbacca', 'vader', 'death-star', 'lightsaber', 'r2d2', 'stormtrooper', 'yoda'];
 
-export const createGame = ({ onWin } = {}) => {
+export const createGame = ({ onWin, onStatsUpdate } = {}) => {
   let moves = 0;
   let matchedPairs = 0;
   let flippedCards = [];
@@ -12,12 +12,20 @@ export const createGame = ({ onWin } = {}) => {
 
   const cardsMap = new Map();
 
+  const notifyStats = () => {
+    if (typeof onStatsUpdate === 'function') {
+      onStatsUpdate({ moves, matchedPairs });
+    }
+  };
+
   const generateCardsData = () => {
     cardsMap.clear();
     moves = 0;
     matchedPairs = 0;
     flippedCards = [];
     isBoardLocked = false;
+
+    notifyStats();
 
     const pairs = [...CARD_TYPES, ...CARD_TYPES];
     const shuffled = shuffle(pairs);
@@ -52,7 +60,6 @@ export const createGame = ({ onWin } = {}) => {
     if (flippedCards.length === 2) {
       const [firstCard, secondCard] = flippedCards;
       moves += 1;
-      console.log(moves);
 
       // Hide types from Map
       const firstType = cardsMap.get(firstCard.id);
@@ -66,6 +73,8 @@ export const createGame = ({ onWin } = {}) => {
         flippedCards = [];
         matchedPairs += 1;
 
+        notifyStats();
+
         if (matchedPairs === CARD_TYPES.length) {
           setTimeout(() => {
             if (typeof onWin === 'function') {
@@ -74,6 +83,8 @@ export const createGame = ({ onWin } = {}) => {
           }, 700);
         }
       } else {
+        notifyStats();
+
         // No match — we lock the board and flip them back over after 1 second.
         isBoardLocked = true;
 

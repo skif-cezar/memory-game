@@ -14,7 +14,22 @@ export const createStats = () => {
     textValue: '0/8',
   });
 
+  const movesValueEl = movesItem.querySelector('.stats__value');
+  const pairsValueEl = pairsFoundItem.querySelector('.stats__value');
+
   stats.append(movesItem, pairsFoundItem);
 
-  return stats;
+  return {
+    element: stats,
+    updateMoves: (moves) => {
+      if (movesValueEl) movesValueEl.textContent = moves;
+    },
+    updatePairs: (pairs, total = 8) => {
+      if (pairsValueEl) pairsValueEl.textContent = `${pairs}/${total}`;
+    },
+    resetStats: () => {
+      if (movesValueEl) movesValueEl.textContent = '0';
+      if (pairsValueEl) pairsValueEl.textContent = '0/8';
+    },
+  };
 };
