@@ -123,25 +123,35 @@
 1 Клонируйте репозиторий:
 ```bash
    git clone [https://github.com/skif-cezar/memory-game.git](https://github.com/skif-cezar/memory-game.git)
+```
 
 2 Переключитесь на ветку memory-game:
+```bash
 git checkout memory-game
+```
 
 3 Перейдите в директорию проекта:
+```bash
 cd memory-game
+```
 
 4 Установите зависимости:
+```bash
 npm install
+```
 
 5 Запустите сервер разработки:
+```bash
 npm run dev
+```
 
 6 Откройте адрес http://localhost:3000 в браузере.
 
 ---
 
 ## 📦 Сборка (Build)
-
+```bash
 npm run build
+```
 
 Файлы сборки будут сгенерированы в директории dist/.
