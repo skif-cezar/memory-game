@@ -114,3 +114,33 @@
 ├── package.json                            # Скрипты и зависимости npm
 ├── README.md                               # Документация проекта
 └── vite.config.js                          # Конфигурация Vite
+
+---
+
+## 🔧 Локальный запуск (Local Setup)
+
+1 Клонируйте репозиторий:
+```bash
+   git clone [https://github.com/skif-cezar/memory-game.git](https://github.com/skif-cezar/memory-game.git)
+
+2 Переключитесь на ветку memory-game:
+git checkout memory-game
+
+3 Перейдите в директорию проекта:
+cd memory-game
+
+4 Установите зависимости:
+npm install
+
+5 Запустите сервер разработки:
+npm run dev
+
+6 Откройте адрес http://localhost:3000 в браузере.
+
+---
+
+## 📦 Сборка (Build)
+
+npm run build
+
+Файлы сборки будут сгенерированы в директории dist/.
