@@ -11,13 +11,13 @@ export const createWinBody = () => {
 
   const moves = document.createElement('p');
   moves.classList.add('win__moves');
-  moves.textContent = 'Progress: ';
+  moves.textContent = 'Moves: ';
 
-  const countProgress = document.createElement('span');
-  countProgress.classList.add('win__count-progress');
-  countProgress.textContent = '20';
+  const countMoves = document.createElement('span');
+  countMoves.classList.add('win__count-moves');
+  countMoves.textContent = '0';
 
-  moves.append(countProgress);
+  moves.append(countMoves);
   win.append(image, message, moves);
 
   return win;

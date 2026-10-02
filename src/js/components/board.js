@@ -12,14 +12,30 @@ export const createBoard = ({ onWin } = {}) => {
   const stats = createStats();
   const game = createGame({ onWin });
 
+  const renderCards = () => {
+    // Безопасная очистка контейнера через native DOM API
+    boardContainer.replaceChildren();
+
+    // Получаем свежий массив 16 карточек из game.js
+    const cardsData = game.generateCardsData();
+
+    cardsData.forEach((data) => {
+      const card = createCard(data);
+      boardContainer.append(card);
+    });
+  };
+
+  // Первичный рендер при старте игры
+  renderCards();
+
   // Get data for 16 cards
-  const cardsData = game.generateCardsData();
+  /*const cardsData = game.generateCardsData();
 
   // Render cards
   cardsData.forEach((data) => {
     const card = createCard(data);
     boardContainer.append(card);
-  });
+  });*/
 
   boardContainer.addEventListener('click', (event) => {
     const cardElement = event.target.closest('.card');
@@ -29,7 +45,14 @@ export const createBoard = ({ onWin } = {}) => {
     }
   });
 
+  const resetBoard = () => {
+    renderCards();
+  };
+
   main.append(stats, boardContainer);
 
-  return main;
+  return {
+    element: main,
+    resetBoard,
+  };
 };

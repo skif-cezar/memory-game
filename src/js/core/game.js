@@ -90,5 +90,6 @@ export const createGame = ({ onWin } = {}) => {
   return {
     generateCardsData,
     handleCardClick,
+    resetGame: generateCardsData,
   };
 };

@@ -9,9 +9,9 @@ import { createLeaderboardTable } from './leaderboardTable.js';
 export const createApp = () => {
   // Пример данных таблицы
   const leaderboardData = [
-    { place: 1, progress: 13, date: '30.09.2026' },
-    { place: 2, progress: 16, date: '01.10.2026' },
-    { place: 3, progress: 21, date: '01.10.2026' },
+    { place: 1, moves: 13, date: '30.09.2026' },
+    { place: 2, moves: 16, date: '01.10.2026' },
+    { place: 3, moves: 21, date: '01.10.2026' },
   ];
 
   const backgroundCanvas = createBackground();
@@ -23,24 +23,30 @@ export const createApp = () => {
 
   // Show/hide modal
   const openModal = (modalElement) => {
+    modalElement.removeAttribute('inert');
     modalElement.setAttribute('aria-hidden', 'false');
     modalElement.classList.add('modal--open');
   };
 
   const closeModal = (modalElement) => {
+    if (modalElement.contains(document.activeElement)) {
+      document.activeElement.blur();
+    }
+    modalElement.setAttribute('inert', '');
     modalElement.setAttribute('aria-hidden', 'true');
     modalElement.classList.remove('modal--open');
   };
 
   const handleWin = (movesCount) => {
-    const progressCountElement = winModal.querySelector('.win__count-progress');
-    if (progressCountElement) {
-      progressCountElement.textContent = movesCount;
+    const movesCountElement = winModal.querySelector('.win__count-moves');
+    if (movesCountElement) {
+      movesCountElement.textContent = movesCount;
     }
     openModal(winModal);
   };
 
-  const board = createBoard({ onWin: handleWin });
+  //const board = createBoard({ onWin: handleWin });
+  const { element: boardElement, resetBoard } = createBoard({ onWin: handleWin });
   const btnNewGame = createButton({
     text: 'New Game',
     id: 'btn-new-game',
@@ -77,7 +83,7 @@ export const createApp = () => {
   // Restart
   btnNewGame.addEventListener('click', () => {
     closeModal(winModal);
-    window.location.reload();
+    resetBoard();
   });
 
   const btnCloseLeaderBoardModal = createButton({
@@ -107,7 +113,7 @@ export const createApp = () => {
     },
   });
 
-  app.append(backgroundCanvas, header, board, winModal, leaderBoardModal);
+  app.append(backgroundCanvas, header, boardElement, winModal, leaderBoardModal);
 
   return app;
 };

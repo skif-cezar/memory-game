@@ -24,7 +24,7 @@
     @include neon;
   }
 
-  &__count-progress {
+  &__count-moves {
     color: var(--gold);
     @include neon(var(--gold));
   }

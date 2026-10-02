@@ -4,8 +4,8 @@ export const createStats = () => {
   const stats = document.createElement('section');
   stats.classList.add('stats');
 
-  const progressItem = createStatsItem({
-    textLabel: 'Progress',
+  const movesItem = createStatsItem({
+    textLabel: 'Moves',
     textValue: '2',
   });
 
@@ -14,7 +14,7 @@ export const createStats = () => {
     textValue: '0',
   });
 
-  stats.append(progressItem, pairsFoundItem);
+  stats.append(movesItem, pairsFoundItem);
 
   return stats;
 };

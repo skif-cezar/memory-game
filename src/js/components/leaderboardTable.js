@@ -4,7 +4,7 @@ export const createLeaderboardTable = (data = []) => {
 
   const thead = document.createElement('thead');
   const headRow = document.createElement('tr');
-  const headers = ['Place', 'Progress', 'Date'];
+  const headers = ['Place', 'Moves', 'Date'];
 
   headers.forEach((headerText) => {
     const th = document.createElement('th');
@@ -21,13 +21,13 @@ export const createLeaderboardTable = (data = []) => {
     const tdPlace = document.createElement('td');
     tdPlace.textContent = row.place;
 
-    const tdProgress = document.createElement('td');
-    tdProgress.textContent = row.progress;
+    const tdMoves = document.createElement('td');
+    tdMoves.textContent = row.moves;
 
     const tdDate = document.createElement('td');
     tdDate.textContent = row.date;
 
-    tr.append(tdPlace, tdProgress, tdDate);
+    tr.append(tdPlace, tdMoves, tdDate);
     tbody.append(tr);
   });
 
