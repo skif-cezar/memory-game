@@ -1,6 +1,6 @@
 import { createButton } from './button.js';
 
-export const createHeader = () => {
+export const createHeader = ({ onNewGame, onOpenLeaderboard } = {}) => {
   const header = document.createElement('header');
   header.classList.add('header');
 
@@ -17,7 +17,7 @@ export const createHeader = () => {
 
   const btnNewGame = createButton({
     text: 'New Game',
-    id: 'btn-new-game',
+    id: 'btn-header-new-game',
     attributes: {
       'aria-label': 'Start a new game',
     },
@@ -25,13 +25,21 @@ export const createHeader = () => {
 
   const btnLeaderboard = createButton({
     text: 'Leaderboard',
-    id: 'btn-leaderboard',
+    id: 'btn-header-leaderboard',
     attributes: {
       'aria-haspopup': 'dialog',
       'aria-controls': 'modal-leaderboard',
       'aria-label': 'Open Leaderboard',
     },
   });
+
+  if (onNewGame) {
+    btnNewGame.addEventListener('click', onNewGame);
+  }
+
+  if (onOpenLeaderboard) {
+    btnLeaderboard.addEventListener('click', onOpenLeaderboard);
+  }
 
   nav.append(btnNewGame, btnLeaderboard);
   container.append(title, nav);

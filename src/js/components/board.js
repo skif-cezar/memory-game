@@ -13,10 +13,9 @@ export const createBoard = ({ onWin } = {}) => {
   const game = createGame({ onWin });
 
   const renderCards = () => {
-    // Безопасная очистка контейнера через native DOM API
     boardContainer.replaceChildren();
 
-    // Получаем свежий массив 16 карточек из game.js
+    // Get free array 16 cards
     const cardsData = game.generateCardsData();
 
     cardsData.forEach((data) => {
@@ -25,17 +24,7 @@ export const createBoard = ({ onWin } = {}) => {
     });
   };
 
-  // Первичный рендер при старте игры
   renderCards();
-
-  // Get data for 16 cards
-  /*const cardsData = game.generateCardsData();
-
-  // Render cards
-  cardsData.forEach((data) => {
-    const card = createCard(data);
-    boardContainer.append(card);
-  });*/
 
   boardContainer.addEventListener('click', (event) => {
     const cardElement = event.target.closest('.card');

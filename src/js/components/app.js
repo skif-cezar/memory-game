@@ -5,6 +5,8 @@ import { createModal } from './modal';
 import { createButton } from './button';
 import { createWinBody } from './winBody';
 import { createLeaderboardTable } from './leaderboardTable.js';
+import { openModal } from '../utils/openModal.js';
+import { closeModal } from '../utils/closeModal.js';
 
 export const createApp = () => {
   // Пример данных таблицы
@@ -19,24 +21,6 @@ export const createApp = () => {
   const app = document.createElement('div');
   app.classList.add('app');
 
-  const header = createHeader();
-
-  // Show/hide modal
-  const openModal = (modalElement) => {
-    modalElement.removeAttribute('inert');
-    modalElement.setAttribute('aria-hidden', 'false');
-    modalElement.classList.add('modal--open');
-  };
-
-  const closeModal = (modalElement) => {
-    if (modalElement.contains(document.activeElement)) {
-      document.activeElement.blur();
-    }
-    modalElement.setAttribute('inert', '');
-    modalElement.setAttribute('aria-hidden', 'true');
-    modalElement.classList.remove('modal--open');
-  };
-
   const handleWin = (movesCount) => {
     const movesCountElement = winModal.querySelector('.win__count-moves');
     if (movesCountElement) {
@@ -45,50 +29,63 @@ export const createApp = () => {
     openModal(winModal);
   };
 
-  //const board = createBoard({ onWin: handleWin });
   const { element: boardElement, resetBoard } = createBoard({ onWin: handleWin });
-  const btnNewGame = createButton({
+
+  const header = createHeader({
+    onNewGame: () => {
+      resetBoard();
+    },
+    onOpenLeaderboard: () => {
+      openModal(leaderBoardModal);
+    },
+  });
+
+  // Button New Game inside win modal
+  const btnWinNewGame = createButton({
     text: 'New Game',
-    id: 'btn-new-game',
+    id: 'btn-win-new-game',
     attributes: {
       'aria-label': 'Start a new game',
     },
   });
+
+  // Button Close inside win modal
   const btnCloseWinModal = createButton({
     text: 'Close',
-    id: 'btn-close',
+    id: 'btn-close-win',
     classNames: ['btn--close'],
     attributes: {
       'aria-label': 'Close',
     },
   });
+
   const winModal = createModal({
     text: 'Win!',
     attributesModal: {
       'aria-hidden': 'true',
     },
     bodyContent: createWinBody(),
-    actionsContent: [btnNewGame, btnCloseWinModal],
+    actionsContent: [btnWinNewGame, btnCloseWinModal],
     attributesDialog: {
       'aria-modal': 'true',
       'aria-label': 'Win!',
     },
   });
 
-  // Close
+  // Close Win Modal
   btnCloseWinModal.addEventListener('click', () => {
     closeModal(winModal);
   });
 
-  // Restart
-  btnNewGame.addEventListener('click', () => {
+  // Restart from Win Modal
+  btnWinNewGame.addEventListener('click', () => {
     closeModal(winModal);
     resetBoard();
   });
 
   const btnCloseLeaderBoardModal = createButton({
     text: 'Close',
-    id: 'btn-close',
+    id: 'btn-close-leaderBoard-modal',
     classNames: ['btn--close'],
     attributes: {
       'aria-label': 'Close',
