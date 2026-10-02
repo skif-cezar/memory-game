@@ -1,0 +1,32 @@
+@use '../abstracts' as *;
+
+.btn {
+  font-size: var(--font-size-base);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  background: rgba(var(--accent-rgb), 0.18);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.4);
+  color: $blue;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+
+  &:hover {
+    background: rgba(var(--accent-rgb), 0.35);
+    box-shadow: 0 0 22px rgba(var(--accent-rgb), 0.7);
+  }
+
+  &--close {
+    color: $red;
+    border-color: $red;
+    background: rgba(255, 0, 51, 0.18);
+    box-shadow: 0 0 14px rgba(255, 0, 51, 0.4);
+
+    &:hover {
+      background: rgb(255 0 51 / 0.39);
+      box-shadow: 0 0 14px rgb(233 130 130);
+    }
+  }
+}
