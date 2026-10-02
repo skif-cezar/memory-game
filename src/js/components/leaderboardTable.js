@@ -15,21 +15,31 @@ export const createLeaderboardTable = (data = []) => {
 
   const tbody = document.createElement('tbody');
 
-  data.forEach((row) => {
-    const tr = document.createElement('tr');
+  if (data.length === 0) {
+    const emptyRow = document.createElement('tr');
+    const emptyCell = document.createElement('td');
+    emptyCell.colSpan = headers.length;
+    emptyCell.textContent = 'No games finished yet';
+    emptyCell.classList.add('leaderboard__empty');
+    emptyRow.append(emptyCell);
+    tbody.append(emptyRow);
+  } else {
+    data.forEach((row) => {
+      const tr = document.createElement('tr');
 
-    const tdPlace = document.createElement('td');
-    tdPlace.textContent = row.place;
+      const tdPlace = document.createElement('td');
+      tdPlace.textContent = row.place;
 
-    const tdMoves = document.createElement('td');
-    tdMoves.textContent = row.moves;
+      const tdMoves = document.createElement('td');
+      tdMoves.textContent = row.moves;
 
-    const tdDate = document.createElement('td');
-    tdDate.textContent = row.date;
+      const tdDate = document.createElement('td');
+      tdDate.textContent = row.date;
 
-    tr.append(tdPlace, tdMoves, tdDate);
-    tbody.append(tr);
-  });
+      tr.append(tdPlace, tdMoves, tdDate);
+      tbody.append(tr);
+    });
+  }
 
   table.append(thead, tbody);
   return table;

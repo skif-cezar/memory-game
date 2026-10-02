@@ -6,12 +6,12 @@ export const createStats = () => {
 
   const movesItem = createStatsItem({
     textLabel: 'Moves',
-    textValue: '2',
+    textValue: '0',
   });
 
   const pairsFoundItem = createStatsItem({
     textLabel: 'Pairs found',
-    textValue: '0',
+    textValue: '0/8',
   });
 
   stats.append(movesItem, pairsFoundItem);

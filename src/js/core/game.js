@@ -41,8 +41,6 @@ export const createGame = ({ onWin } = {}) => {
       return;
     }
 
-    moves += 1;
-
     // Open card in DOM onclick
     const cardId = cardElement.id;
     const cardType = cardsMap.get(cardId);
@@ -53,6 +51,8 @@ export const createGame = ({ onWin } = {}) => {
     // If 2 cards are turned over, we check
     if (flippedCards.length === 2) {
       const [firstCard, secondCard] = flippedCards;
+      moves += 1;
+      console.log(moves);
 
       // Hide types from Map
       const firstType = cardsMap.get(firstCard.id);

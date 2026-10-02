@@ -7,25 +7,34 @@ import { createWinBody } from './winBody';
 import { createLeaderboardTable } from './leaderboardTable.js';
 import { openModal } from '../utils/openModal.js';
 import { closeModal } from '../utils/closeModal.js';
+import { getLeaderboard, saveGameResult } from '../utils/leaderboardStorage.js';
 
 export const createApp = () => {
-  // Пример данных таблицы
-  const leaderboardData = [
-    { place: 1, moves: 13, date: '30.09.2026' },
-    { place: 2, moves: 16, date: '01.10.2026' },
-    { place: 3, moves: 21, date: '01.10.2026' },
-  ];
-
   const backgroundCanvas = createBackground();
 
   const app = document.createElement('div');
   app.classList.add('app');
 
+  const leaderboardBodyContainer = document.createElement('div');
+  let currentTableElement = createLeaderboardTable(getLeaderboard());
+  leaderboardBodyContainer.append(currentTableElement);
+
+  const updateLeaderboardUI = () => {
+    const freshData = getLeaderboard();
+    const newTableElement = createLeaderboardTable(freshData);
+    currentTableElement.replaceWith(newTableElement);
+    currentTableElement = newTableElement;
+  };
+
   const handleWin = (movesCount) => {
+    saveGameResult(movesCount);
+
     const movesCountElement = winModal.querySelector('.win__count-moves');
     if (movesCountElement) {
       movesCountElement.textContent = movesCount;
     }
+
+    updateLeaderboardUI();
     openModal(winModal);
   };
 
@@ -36,6 +45,7 @@ export const createApp = () => {
       resetBoard();
     },
     onOpenLeaderboard: () => {
+      updateLeaderboardUI();
       openModal(leaderBoardModal);
     },
   });
@@ -96,10 +106,9 @@ export const createApp = () => {
     closeModal(leaderBoardModal);
   });
 
-  const tableElement = createLeaderboardTable(leaderboardData);
   const leaderBoardModal = createModal({
     text: 'Leaderboard',
-    bodyContent: tableElement,
+    bodyContent: leaderboardBodyContainer,
     actionsContent: [btnCloseLeaderBoardModal],
     attributesModal: {
       'aria-hidden': 'true',
