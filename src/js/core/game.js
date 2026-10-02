@@ -1,6 +1,8 @@
 import { shuffle } from '../utils/shuffle';
 import { revealCard } from '../utils/revealCard';
 import { hideCard } from '../utils/hideCard';
+import { playClickSound, stopClickSound } from '../utils/clickSound.js';
+import { playMatchedSound } from '../utils/matchedSound.js';
 
 const CARD_TYPES = ['c3po', 'chewbacca', 'vader', 'death-star', 'lightsaber', 'r2d2', 'stormtrooper', 'yoda'];
 
@@ -49,6 +51,8 @@ export const createGame = ({ onWin, onStatsUpdate, onGameEnd } = {}) => {
       return;
     }
 
+    playClickSound();
+
     // Open card in DOM onclick
     const cardId = cardElement.id;
     const cardType = cardsMap.get(cardId);
@@ -72,6 +76,9 @@ export const createGame = ({ onWin, onStatsUpdate, onGameEnd } = {}) => {
         secondCard.disabled = true;
         flippedCards = [];
         matchedPairs += 1;
+
+        stopClickSound();
+        playMatchedSound();
 
         notifyStats();
 

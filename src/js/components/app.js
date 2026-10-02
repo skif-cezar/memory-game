@@ -8,6 +8,7 @@ import { createLeaderboardTable } from './leaderboardTable.js';
 import { openModal } from '../utils/openModal.js';
 import { closeModal } from '../utils/closeModal.js';
 import { getLeaderboard, saveGameResult } from '../utils/leaderboardStorage.js';
+import { playWinSound, stopWinSound } from '../utils/winSound.js';
 
 export const createApp = () => {
   const backgroundCanvas = createBackground();
@@ -38,6 +39,8 @@ export const createApp = () => {
 
     updateLeaderboardUI();
     openModal(winModal);
+
+    playWinSound();
   };
 
   const handleGameEnd = () => {
@@ -50,6 +53,7 @@ export const createApp = () => {
   });
 
   const handleNewGame = () => {
+    stopWinSound();
     backgroundCanvas.resetSpeed();
     resetBoard();
   };
@@ -103,6 +107,7 @@ export const createApp = () => {
 
   // Restart from Win Modal
   btnWinNewGame.addEventListener('click', () => {
+    stopWinSound();
     closeModal(winModal);
     handleNewGame();
   });
