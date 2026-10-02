@@ -15,6 +15,8 @@ export const createApp = () => {
   const app = document.createElement('div');
   app.classList.add('app');
 
+  app.append(backgroundCanvas.element);
+
   const leaderboardBodyContainer = document.createElement('div');
   let currentTableElement = createLeaderboardTable(getLeaderboard());
   leaderboardBodyContainer.append(currentTableElement);
@@ -38,11 +40,23 @@ export const createApp = () => {
     openModal(winModal);
   };
 
-  const { element: boardElement, resetBoard } = createBoard({ onWin: handleWin });
+  const handleGameEnd = () => {
+    backgroundCanvas.boostSpeed();
+  };
+
+  const { element: boardElement, resetBoard } = createBoard({
+    onWin: handleWin,
+    onGameEnd: handleGameEnd,
+  });
+
+  const handleNewGame = () => {
+    backgroundCanvas.resetSpeed();
+    resetBoard();
+  };
 
   const header = createHeader({
     onNewGame: () => {
-      resetBoard();
+      handleNewGame();
     },
     onOpenLeaderboard: () => {
       updateLeaderboardUI();
@@ -90,7 +104,7 @@ export const createApp = () => {
   // Restart from Win Modal
   btnWinNewGame.addEventListener('click', () => {
     closeModal(winModal);
-    resetBoard();
+    handleNewGame();
   });
 
   const btnCloseLeaderBoardModal = createButton({
@@ -119,7 +133,7 @@ export const createApp = () => {
     },
   });
 
-  app.append(backgroundCanvas, header, boardElement, winModal, leaderBoardModal);
+  app.append(header, boardElement, winModal, leaderBoardModal);
 
   return app;
 };

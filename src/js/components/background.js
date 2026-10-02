@@ -5,9 +5,14 @@ export const createBackground = () => {
 
   // Параметры сцены
   const STARS_COUNT = 3000;
-  const SPEED = 1.3;
+  const BASE_SPEED = 1.3;
+  const MAX_SPEED = 25.0; // Максимальная скорость при ускорении
 
-  // Палитра цветов (в формате RGBA строк для канваса)
+  let currentSpeed = BASE_SPEED;
+  let targetSpeed = BASE_SPEED;
+  const ACCELERATION_FACTOR = 0.03; // Скорость нарастания (чем больше, тем быстрее разгон)
+
+  // Палитра цветов
   const COLORS = ['#ffffff', '#e0f7fa', '#fffde7', '#bbdefb'];
 
   let width = 0;
@@ -16,29 +21,24 @@ export const createBackground = () => {
   let cy = 0;
   let animationFrameId = null;
 
-  // [x, y, z, prevZ] для каждой звезды
   const starData = new Float32Array(STARS_COUNT * 4);
-  // [colorIndex] для каждой звезды
   const starColors = new Uint8Array(STARS_COUNT);
 
-  // Сброс / инициализация одной звезды
   function resetStar(index, isInitial = false) {
     const offset = index * 4;
 
-    starData[offset] = (Math.random() - 0.5) * width * 2; // x
-    starData[offset + 1] = (Math.random() - 0.5) * height * 2; // y
+    starData[offset] = (Math.random() - 0.5) * width * 2;
+    starData[offset + 1] = (Math.random() - 0.5) * height * 2;
 
-    // Если это первая инициализация, распределяем z случайно, иначе спавним на максимальной глубине
     const z = isInitial ? Math.random() * width : width;
-    starData[offset + 2] = z; // z
-    starData[offset + 3] = z; // prevZ
+    starData[offset + 2] = z;
+    starData[offset + 3] = z;
 
     if (isInitial) {
       starColors[index] = Math.floor(Math.random() * COLORS.length);
     }
   }
 
-  // Изменение размеров холста
   function resizeCanvas() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
@@ -46,22 +46,19 @@ export const createBackground = () => {
     cy = height / 2;
   }
 
-  // Обновление состояния звезды
   function updateStar(index) {
     const offset = index * 4;
 
-    // prevZ = z
     starData[offset + 3] = starData[offset + 2];
-    // z -= SPEED
-    starData[offset + 2] -= SPEED;
 
-    // Если звезда за пределами экрана (глубины), пересоздаем её
+    // Используем текущую динамическую скорость
+    starData[offset + 2] -= currentSpeed;
+
     if (starData[offset + 2] <= 0) {
       resetStar(index, false);
     }
   }
 
-  // Отрисовка звезды
   function drawStar(index) {
     const offset = index * 4;
     const x = starData[offset];
@@ -69,18 +66,14 @@ export const createBackground = () => {
     const z = starData[offset + 2];
     const prevZ = starData[offset + 3];
 
-    // Проекция 3D в 2D (перспектива)
     const sx = (x / z) * width + cx;
     const sy = (y / z) * height + cy;
 
-    // Проверка выхода за границы экрана
     if (sx < 0 || sx > width || sy < 0 || sy > height) return;
 
-    // Прошлая позиция для шлейфа
     const px = (x / prevZ) * width + cx;
     const py = (y / prevZ) * height + cy;
 
-    // Размер звезды
     const radius = Math.max(0.1, (1 - z / width) * 2.5);
 
     ctx.beginPath();
@@ -92,7 +85,6 @@ export const createBackground = () => {
     ctx.stroke();
   }
 
-  // Инициализация звездного поля
   function init() {
     resizeCanvas();
     for (let i = 0; i < STARS_COUNT; i++) {
@@ -100,10 +92,13 @@ export const createBackground = () => {
     }
   }
 
-  // Главный цикл анимации
   function animate() {
-    // Полупрозрачная заливка для создания эффекта размытия / шлейфов
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+    // Плавное приближение currentSpeed к targetSpeed (линейная интерполяция)
+    currentSpeed += (targetSpeed - currentSpeed) * ACCELERATION_FACTOR;
+
+    // При высокой скорости делаем хвосты звёзд более выраженными за счет уменьшения прозрачности фона
+    const bgAlpha = currentSpeed > 5 ? 0.2 : 0.4;
+    ctx.fillStyle = `rgba(0, 0, 0, ${bgAlpha})`;
     ctx.fillRect(0, 0, width, height);
 
     for (let i = 0; i < STARS_COUNT; i++) {
@@ -114,17 +109,23 @@ export const createBackground = () => {
     animationFrameId = requestAnimationFrame(animate);
   }
 
-  // Обработчик изменения размера окна
   function handleResize() {
     resizeCanvas();
   }
 
-  // Слушатели событий
   window.addEventListener('resize', handleResize);
 
-  // Старт
   init();
   animate();
 
-  return canvas;
+  // Возвращаем объект с DOM-элементом canvas и методами управления скоростью
+  return {
+    element: canvas,
+    boostSpeed: (speed = MAX_SPEED) => {
+      targetSpeed = speed;
+    },
+    resetSpeed: () => {
+      targetSpeed = BASE_SPEED;
+    },
+  };
 };

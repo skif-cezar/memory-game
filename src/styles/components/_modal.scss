@@ -36,7 +36,6 @@
     transition: transform 0.35s ease;
   }
   &__title {
-    margin-bottom: 12px;
     text-align: center;
     font-size: var(--font-size-2xl);
     line-height: var(--line-height-base);
@@ -49,6 +48,6 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 8px;
-    margin-top: 24px;
+    margin-top: 20px;
   }
 }

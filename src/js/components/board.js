@@ -2,7 +2,7 @@ import { createStats } from './stats.js';
 import { createCard } from './card.js';
 import { createGame } from '../core/game.js';
 
-export const createBoard = ({ onWin } = {}) => {
+export const createBoard = ({ onWin, onGameEnd } = {}) => {
   const main = document.createElement('main');
   main.classList.add('app__main');
 
@@ -12,6 +12,7 @@ export const createBoard = ({ onWin } = {}) => {
   const stats = createStats();
   const game = createGame({
     onWin,
+    onGameEnd,
     onStatsUpdate: ({ moves, matchedPairs }) => {
       stats.updateMoves(moves);
       stats.updatePairs(matchedPairs);

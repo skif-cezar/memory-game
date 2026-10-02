@@ -4,7 +4,7 @@ import { hideCard } from '../utils/hideCard';
 
 const CARD_TYPES = ['c3po', 'chewbacca', 'vader', 'death-star', 'lightsaber', 'r2d2', 'stormtrooper', 'yoda'];
 
-export const createGame = ({ onWin, onStatsUpdate } = {}) => {
+export const createGame = ({ onWin, onStatsUpdate, onGameEnd } = {}) => {
   let moves = 0;
   let matchedPairs = 0;
   let flippedCards = [];
@@ -76,11 +76,15 @@ export const createGame = ({ onWin, onStatsUpdate } = {}) => {
         notifyStats();
 
         if (matchedPairs === CARD_TYPES.length) {
+          if (typeof onGameEnd === 'function') {
+            onGameEnd();
+          }
+
           setTimeout(() => {
             if (typeof onWin === 'function') {
               onWin(moves);
             }
-          }, 700);
+          }, 2500);
         }
       } else {
         notifyStats();
