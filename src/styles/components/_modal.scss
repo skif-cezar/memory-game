@@ -1,0 +1,55 @@
+@use '../abstracts' as *;
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: 16px;
+  background: rgba(2, 4, 14, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s;
+
+  &--open {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+  &--open &__dialog {
+    transform: none;
+  }
+
+  &__dialog {
+    @include glass(0.78);
+    width: min(100%, 32rem);
+    max-height: 90dvh;
+    overflow: auto;
+    padding: 20px;
+    border-radius: 1rem;
+    transform: translateY(20px) scale(0.96);
+    transition: transform 0.35s ease;
+  }
+  &__title {
+    text-align: center;
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-base);
+    letter-spacing: 1px;
+    color: var(--gold);
+    @include neon(var(--gold));
+  }
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+}
