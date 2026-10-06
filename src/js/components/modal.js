@@ -1,3 +1,5 @@
+import { closeModal } from '../utils/modalManager.js';
+
 export const createModal = ({
   text = '',
   classNames = ['modal'],
@@ -9,6 +11,9 @@ export const createModal = ({
   const modal = document.createElement('div');
   modal.classList.add(...classNames);
 
+  modal.inert = true;
+  modal.setAttribute('aria-hidden', 'true');
+
   Object.entries(attributesModal).forEach(([key, value]) => {
     modal.setAttribute(key, value);
   });
@@ -16,6 +21,7 @@ export const createModal = ({
   const modalDialog = document.createElement('div');
   modalDialog.classList.add('modal__dialog');
   modalDialog.setAttribute('role', 'dialog');
+  modalDialog.setAttribute('tabindex', '-1');
 
   Object.entries(attributesDialog).forEach(([key, value]) => {
     modalDialog.setAttribute(key, value);
@@ -49,6 +55,12 @@ export const createModal = ({
 
   modalDialog.append(title, body, actions);
   modal.append(modalDialog);
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal(modal);
+    }
+  });
 
   return modal;
 };

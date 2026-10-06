@@ -5,8 +5,7 @@ import { createModal } from './modal';
 import { createButton } from './button';
 import { createWinBody } from './winBody';
 import { createLeaderboardTable } from './leaderboardTable.js';
-import { openModal } from '../utils/openModal.js';
-import { closeModal } from '../utils/closeModal.js';
+import { openModal, closeModal } from '../utils/modalManager.js';
 import { getLeaderboard, saveGameResult } from '../utils/leaderboardStorage.js';
 import { playWinSound, stopWinSound } from '../utils/winSound.js';
 
@@ -39,7 +38,6 @@ export const createApp = () => {
 
     updateLeaderboardUI();
     openModal(winModal);
-
     playWinSound();
   };
 
